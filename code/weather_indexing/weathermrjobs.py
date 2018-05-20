@@ -82,7 +82,7 @@ class MRmeans(MRJob):
 		# 	yield data[0], data[1]
 		length = self.max - self.min
 		for key, value in self.weather_dict.items():
-			yield key, value/length
+			yield key, (value - self.min)/length
 		yield self.max, self.min
 
 
