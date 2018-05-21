@@ -1,4 +1,5 @@
-Finish building index of hour and day in pandas version.
+Finish generating time index in pandas verson.
 
 To do:
-MapReduce version?
+a slightly different verson for sublime text?
+map time index to all trips
