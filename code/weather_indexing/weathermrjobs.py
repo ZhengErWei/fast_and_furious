@@ -65,25 +65,20 @@ class MRmeans(MRJob):
 		y_ct = 0
 		for val in ys:
 			val = float(val)
-			# if val <= 100:
-			if val <= 1:
+			if val <= 100:
 				y_ct += 1
 				y_sum += val
-				if val > self.max:
-					self.max = val
-				if val < self.min:
-					self.min = val
 
 		self.weather_dict[tuple(weather)] = y_sum/y_ct
 
 	def reducer_final(self):
 
-		# sort_list = sorted(self.weather_dict.items(), key=lambda t: t[1])
-		# for data in sort_list:
-		# 	yield data[0], data[1]
+		sort_list = sorted(self.weather_dict.items(), key=lambda t: t[1])
+		self.max = sort_list[-1][1]
+		self.min = sort_list[0][1]
 		length = self.max - self.min
-		for key, value in self.weather_dict.items():
-			yield key, (value - self.min)/length
+		for data in sort_list:
+			yield data[0], (data[1] - self.min)/(self.max-self.min)
 		# yield self.max, self.min
 
 
