@@ -64,14 +64,15 @@ class MRmeans(MRJob):
 		y_sum = 0
 		y_ct = 0
 		for val in ys:
-			print(val)
 			val = float(val)
-			y_ct += 1
-			y_sum += val
-			if val > self.max:
-				self.max = val
-			if val < self.min:
-				self.min = val
+			# if val <= 100:
+			if val <= 1:
+				y_ct += 1
+				y_sum += val
+				if val > self.max:
+					self.max = val
+				if val < self.min:
+					self.min = val
 
 		self.weather_dict[tuple(weather)] = y_sum/y_ct
 
@@ -83,7 +84,7 @@ class MRmeans(MRJob):
 		length = self.max - self.min
 		for key, value in self.weather_dict.items():
 			yield key, (value - self.min)/length
-		yield self.max, self.min
+		# yield self.max, self.min
 
 
 if __name__ == '__main__':

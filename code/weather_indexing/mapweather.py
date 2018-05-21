@@ -1,4 +1,4 @@
-import map_weather_trip
+import mapweather_util
 from mpi4py import MPI 
 import sys
 import pandas as pd
@@ -16,7 +16,7 @@ def get_weather_chunk(filename):
 										'tpep_dropoff_datetime'])
 	start_t = time_df.iloc[0, 0][:10]
 	end_t = time_df.iloc[-1, 1][:10]
-	weather_df = map_weather_trip.get_weather_df(start_t, end_t)
+	weather_df = mapweather_util.get_weather_df(start_t, end_t)
 
 	return weather_df
 
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 		chunks = None
 
 	chunk = comm.scatter(chunks, root = 0)
-	rv = map_weather_trip.get_all_weather(chunk, weather_df)
+	rv = mapweather_util.get_all_weather(chunk, weather_df)
 	rv_all = pd.concat([chunk, rv], axis = 1)
 
 	gathered_dfs = comm.gather(rv, root = 0)

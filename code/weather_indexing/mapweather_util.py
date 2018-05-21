@@ -2,7 +2,7 @@ import pandas as pd
 from datetime import datetime
 
 
-WEATHER_DF = pd.read_csv('../data/weather_201507_201606.csv')
+WEATHER_DF = pd.read_csv('../../data/weather_201507_201606.csv')
 WEATHER_DF.columns = ['date', 'hour', 'minute', 'visibility', 'cond']
 WEATHER_DF['visibility'].replace(-9999, 10, inplace=True)
 WEATHER_DF['date'] = WEATHER_DF['date'].astype(str)
@@ -50,6 +50,7 @@ def get_weather(date_time, df):
 	'''
 
 	# date_str = ''.join(date_time[:10].split('-'))
+	print(date_time)
 	dt_object = datetime.strptime(date_time, '%Y-%m-%d %H:%M:%S')
 	dt_date = dt_object.date()
 	size = df.shape[0]
