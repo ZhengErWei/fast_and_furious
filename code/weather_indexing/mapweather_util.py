@@ -3,7 +3,7 @@ from datetime import datetime, date, timedelta
 from dateutil.rrule import rrule, DAILY, HOURLY
 
 
-WEATHER_DF = pd.read_csv('../../data/weather_201507_201606.csv')
+WEATHER_DF = pd.read_csv('../data/weather_201507_201606.csv')
 WEATHER_DF.columns = ['date', 'hour', 'minute', 'visibility', 'cond']
 WEATHER_DF['visibility'].replace(-9999, 10, inplace=True)
 WEATHER_DF['date'] = WEATHER_DF['date'].astype(str)
