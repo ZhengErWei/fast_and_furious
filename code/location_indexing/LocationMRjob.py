@@ -37,28 +37,46 @@ class MRmeans(MRJob):
 		self.min = 0
 
 
+	# def reducer(self, location, ys):
+
+	# 	y_sum = 0
+	# 	y_ct = 0
+	# 	for val in ys:
+	# 		val = float(val)
+	# 		y_ct += 1
+	# 		y_sum += val
+	# 		if val > self.max:
+	# 			self.max = val
+	# 		if val < self.min:
+	# 			self.min = val
+
+	# 	self. location_dict[tuple(location)] = y_sum/y_ct
+
 	def reducer(self, location, ys):
 
 		y_sum = 0
 		y_ct = 0
 		for val in ys:
 			val = float(val)
-			y_ct += 1
-			y_sum += val
-			if val > self.max:
-				self.max = val
-			if val < self.min:
-				self.min = val
+			if (val <= 100) and (val != float('inf')):
+				y_ct += 1
+				y_sum += val
+			# print(y_ct)
 
-		self. location_dict[tuple(location)] = y_sum/y_ct
+		if y_ct > 0:
+			self.location_dict[tuple(location)] = y_sum/y_ct
 
 	def reducer_final(self):
 
-		lengh = self.max - self.min
-		for key, value in self.location_dict.items():
-			yield key, value/lenth
-		yield self.max, self.min
+		sort_list = sorted(self.location_dict.items(), key=lambda t: t[1])
+		self.max = sort_list[-1][1]
+		self.min = sort_list[0][1]
+		length = self.max - self.min
+		for data in sort_list:
+			yield data[0], (data[1] - self.min)/(self.max-self.min)
+		# yield self.max, self.min
+
 
 if __name__ == '__main__':
-
+# 	MRcount.run()
 	MRmeans.run()
