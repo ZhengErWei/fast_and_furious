@@ -4,12 +4,13 @@ import sys
 from sklearn.cluster import KMeans
 import numpy as np
 
-SAMPLE_DF = pd.read_csv('sample_trip.csv')[['tpep_pickup_datetime','tpep_dropoff_datetime',
+SAMPLE_DF = pd.read_csv('../data/sample_trip.csv')[['tpep_pickup_datetime','tpep_dropoff_datetime',
             'pickup_longitude','pickup_latitude','dropoff_longitude','dropoff_latitude',
                                                     'fare_amount','tip_amount']]
-NONSAMPLE_DF = pd.read_csv('nonsample_trip.csv')[['tpep_pickup_datetime','tpep_dropoff_datetime',
-            'pickup_longitude','pickup_latitude','dropoff_longitude','dropoff_latitude',
-                                                    'fare_amount','tip_amount']]
+print(SAMPLE_DF.shape)
+# NONSAMPLE_DF = pd.read_csv('nonsample_trip.csv')[['tpep_pickup_datetime','tpep_dropoff_datetime',
+#             'pickup_longitude','pickup_latitude','dropoff_longitude','dropoff_latitude',
+#                                                     'fare_amount','tip_amount']]
 
 def calculate_distance(lat1, lon1, lat2, lon2):
 # approximate radius of earth in km
@@ -28,11 +29,14 @@ def calculate_distance(lat1, lon1, lat2, lon2):
 
 def k_means(df, n):
     coordinates = df[["pickup_longitude","pickup_latitude","dropoff_longitude","dropoff_latitude"]]
-    filter = (coordinates['pickup_latitude'] <= -66.9513812) & (coordinates['pickup_longitude'] <= 49.3457868) \
-            & (coordinates['dropoff_latitude'] <= -66.9513812) & (coordinates['pickup_longitude'] <= 49.3457868)
-    coordinates = coordinates[filter]
-    coordinats1 = coordinates[["pickup_longitude","pickup_latitude"]]
-    coordinats2 = coordinates[["dropoff_longitude","dropoff_latitude"]]
+
+    # filter = (coordinates['pickup_latitude'] <= -66.9513812) & (coordinates['pickup_longitude'] <= 49.3457868) \
+    #         &(coordinates['dropoff_latitude'] <= -66.9513812) & (coordinates['pickup_longitude'] <= 49.3457868)
+    # coordinates = coordinates[filter]
+
+    coordinates1 = coordinates[["pickup_longitude","pickup_latitude"]]
+
+    coordinates2 = coordinates[["dropoff_longitude","dropoff_latitude"]]
     coordinate_array1 = np.array(coordinates1)
     coordinate_array2 = np.array(coordinates2)
     kmeans1 = KMeans(n_clusters= n, random_state=0).fit(coordinate_array1)
@@ -56,16 +60,17 @@ def get_sample_subset(y, df, location_df):
         time_diff = time_diff.apply(lambda x: x.total_seconds()/60)
         rv = time_diff/distance
     df_new = pd.concat([rv, location_df], axis = 1)
-    df_new = df.dropna(how='any')
+    df_new = df_new.dropna(how='any')
     df_new.columns = ['val', 'pickup_cluster', 'dropoff_cluster']
 
 
     return df_new
 
 
- if __name__ == '__main__':
+if __name__ == '__main__':
     y, outputfile = sys.argv[1:]
-    coordinates = k_means(SAMPLE_DF, 100)
+    coordinates = k_means(SAMPLE_DF, 50)
     sample_location = coordinates[['pickup_cluster','dropoff_cluster']]
+    print(sample_location.shape)
     df_sample =  get_sample_subset(y, SAMPLE_DF, sample_location)
     df_sample.to_csv(outputfile)
