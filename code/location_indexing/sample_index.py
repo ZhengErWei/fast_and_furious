@@ -4,7 +4,7 @@ import sys
 from sklearn.cluster import KMeans
 import numpy as np
 
-SAMPLE_DF = pd.read_csv('../data/sample_trip.csv')[['tpep_pickup_datetime','tpep_dropoff_datetime',
+SAMPLE_DF = pd.read_csv('../../data/sample_trip.csv')[['tpep_pickup_datetime','tpep_dropoff_datetime',
             'pickup_longitude','pickup_latitude','dropoff_longitude','dropoff_latitude',
                                                     'fare_amount','tip_amount']]
 print(SAMPLE_DF.shape)
