@@ -23,5 +23,5 @@ kmeans2 = KMeans(n_clusters= 100, random_state=0).fit(coordinate_array2)
 
 # if you need to use the kmeans model in mapreduce, just call 
 
-label = kmeans1.predict(np.array(longtitude, latitude))
-label = kmeans2.predict(np.array(longtitude, latitude))
+# label = kmeans1.predict(np.array(longtitude, latitude))
+# label = kmeans2.predict(np.array(longtitude, latitude))
