@@ -100,7 +100,7 @@ class MRindex(MRJob):
 
 		if ind != 'None':
 			for val in vals:
-				yield ind, vals
+				yield ind, val
 
 if __name__ == '__main__':
 	MRindex.run()
