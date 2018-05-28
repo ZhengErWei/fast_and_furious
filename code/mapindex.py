@@ -29,19 +29,19 @@ class MRindex(MRJob):
 
 		row = next(csv.reader([line]))
 		# print(row, 'here')
-		if (len(row) > 0) and (row[1] != 'VendorID'):
-			start_date, start_hour = row[2].split(':')[0].split(' ')
+		if (len(row) > 0) and (row[0] != 'VendorID'):
+			start_date, start_hour = row[1].split(':')[0].split(' ')
 			start_hour = str(int(start_hour))
 			year, month, date = start_date.split('-')
 			start_date = ''.join([year, month, date])
-			end_date, end_hour = row[3].split(':')[0].split(' ')
+			end_date, end_hour = row[2].split(':')[0].split(' ')
 			end_date = ''.join(end_date.split('-'))
 			end_hour = str(int(end_hour))
 
-			pick_lon = float(row[6])
-			pick_lat = float(row[7])
-			drop_lon = float(row[10])
-			drop_lat = float(row[11])
+			pick_lon = float(row[5])
+			pick_lat = float(row[6])
+			drop_lon = float(row[9])
+			drop_lat = float(row[10])
 
 
 			#weather_index
@@ -70,22 +70,22 @@ class MRindex(MRJob):
 				key = (weather_st_ind, weather_end_ind, loc_ind, weekday_ind, hour_ind, month_ind)
 
 				distance = sample_y.calculate_distance(pick_lat, pick_lon, drop_lat, drop_lat)
-				start_time = datetime.strptime(row[2], '%Y-%m-%d %H:%M:%S')
-				end_time = datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S')
+				start_time = datetime.strptime(row[1], '%Y-%m-%d %H:%M:%S')
+				end_time = datetime.strptime(row[2], '%Y-%m-%d %H:%M:%S')
 				time_diff = (end_time - start_time).total_seconds()/60
 				value = time_diff/distance
 
 			
 			except:
-				key = None
-				value = None
+				key = 'None'
+				value = 'None'
 
 			yield key, value
 		
 
 	def resucer(self, ind, vals):
 
-		if ind != None:
+		if ind != 'None':
 			for val in vals:
 				yield ind, vals
 
