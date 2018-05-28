@@ -80,6 +80,7 @@ class MRindex(MRJob):
 				key = 'None'
 				value = 'None'
 
+			print(key, value)
 			yield key, value
 		
 
