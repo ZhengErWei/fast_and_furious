@@ -96,7 +96,7 @@ class MRindex(MRJob):
 			yield key, value
 		
 
-	def resucer(self, ind, vals):
+	def reducer(self, ind, vals):
 
 		if ind != 'None':
 			for val in vals:
