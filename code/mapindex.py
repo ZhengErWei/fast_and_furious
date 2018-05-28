@@ -11,19 +11,32 @@ from datetime import datetime
 import sample_y
 import mapindex_util
 
-KMEANS_1 = remarks.kmeans1
-KMEANS_2 = remarks.kmeans2
+# KMEANS_1 = remarks.kmeans1
+# KMEANS_2 = remarks.kmeans2
 
-TIME_WEATHER_DICT = mapweather_util.get_weather_hour_dict()
-WEATHER_INDEX_DICT = mapindex_util.WEATHER_INDEX_DICT
-LOCATION_INDEX_DICT = mapindex_util.LOCATION_INDEX_DICT
+# TIME_WEATHER_DICT = mapweather_util.get_weather_hour_dict()
+# WEATHER_INDEX_DICT = mapindex_util.WEATHER_INDEX_DICT
+# LOCATION_INDEX_DICT = mapindex_util.LOCATION_INDEX_DICT
 
 
-HOUR_INDEX = mapindex_util.HOUR_INDEX
-MONTH_INDEX = mapindex_util.MONTH_INDEX
-WEEK_INDEX = mapindex_util.WEEK_INDEX
+# HOUR_INDEX = mapindex_util.HOUR_INDEX
+# MONTH_INDEX = mapindex_util.MONTH_INDEX
+# WEEK_INDEX = mapindex_util.WEEK_INDEX
 
 class MRindex(MRJob):
+
+	def mapper_init(self):
+
+		self.KMEANS_1 = remarks.kmeans1
+		self.KMEANS_2 = remarks.kmeans2
+		self.TIME_WEATHER_DICT = mapweather_util.get_weather_hour_dict()
+		self.WEATHER_INDEX_DICT = mapindex_util.WEATHER_INDEX_DICT
+		self.LOCATION_INDEX_DICT = mapindex_util.LOCATION_INDEX_DICT
+		self.HOUR_INDEX = mapindex_util.HOUR_INDEX
+		self.MONTH_INDEX = mapindex_util.MONTH_INDEX
+		self.WEEK_INDEX = mapindex_util.WEEK_INDEX
+
+
 
 	def mapper(self, _, line):
 
@@ -47,25 +60,25 @@ class MRindex(MRJob):
 			#weather_index
 			try:
 				start_weather_tup = (start_date, start_hour)
-				start_cond = TIME_WEATHER_DICT[start_weather_tup]
-				weather_st_ind = WEATHER_INDEX_DICT[start_cond]
+				start_cond = self.TIME_WEATHER_DICT[start_weather_tup]
+				weather_st_ind = self.WEATHER_INDEX_DICT[start_cond]
 
 				end_weather_tup = (end_date, end_hour)
-				end_cond = TIME_WEATHER_DICT[end_weather_tup]
-				weather_end_ind = WEATHER_INDEX_DICT[end_cond]
+				end_cond = self.TIME_WEATHER_DICT[end_weather_tup]
+				weather_end_ind = self.WEATHER_INDEX_DICT[end_cond]
 
 			#location index
-				pick_clus = KMEANS_1.predict(np.array([pick_lon, pick_lat]).reshape(1,-1))
-				drop_clus = KMEANS_2.predict(np.array([drop_lon, drop_lat]).reshape(1,-1))
-				loc_ind = LOCATION_INDEX_DICT[(pick_clus[0], drop_clus[0])]
+				pick_clus = self.KMEANS_1.predict(np.array([pick_lon, pick_lat]).reshape(1,-1))
+				drop_clus = self.KMEANS_2.predict(np.array([drop_lon, drop_lat]).reshape(1,-1))
+				loc_ind = self.LOCATION_INDEX_DICT[(pick_clus[0], drop_clus[0])]
 
 			#time index
 				weekday = datetime.strptime(start_date, '%Y%m%d').weekday()
-				weekday_ind = WEEK_INDEX.loc[weekday]['index']
+				weekday_ind = self.WEEK_INDEX.loc[weekday]['index']
 
-				hour_ind = HOUR_INDEX.loc[int(start_hour)]['index']
+				hour_ind = self.HOUR_INDEX.loc[int(start_hour)]['index']
 
-				month_ind = MONTH_INDEX.loc[int(month)]['index']
+				month_ind = self.MONTH_INDEX.loc[int(month)]['index']
 
 				key = (weather_st_ind, weather_end_ind, loc_ind, weekday_ind, hour_ind, month_ind)
 
@@ -80,7 +93,6 @@ class MRindex(MRJob):
 				key = 'None'
 				value = 'None'
 
-			print(key, value)
 			yield key, value
 		
 
