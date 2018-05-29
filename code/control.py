@@ -17,26 +17,31 @@ class MRindex(MRJob):
 			index_together = [float(l) for l in index_list.split(',')]
 			total = round(np.sum(index_together) - index_together[i],4)
 			# index_sum = [round( total - index_together[i], 2) for i in range(6)]
-			# print ((round(index_together[i], 4), total), y)
-			yield ((round(index_together[i], 4), total), y)
+			#print ((round(index_together[i], 4), total), y)
+			yield (round(index_together[i], 4), total, y), 1
 
 		except:
 			pass
 
 
-	# def combiner(self, key, value):
-	# 	yield (key, value), count(value)
+	def reducer(self, key, value):
+		# entry = str(X[0]) +',' + str(X[1]) + ',' + str(list(y)[0])
+		# result_dict[entry] = result_dict.get(entry, 0) + 1
+		# yield (key, value), count(value)
+		yield key, sum(value)
 
+	def combiner(self, key, value):
+		yield key, sum(value)
 
-	# def reducer(self, key, value):
-
-	# 	total_counts = sum(counts)
-
-	# 	if total_counts >= 10:
-	# 		yield None, name
 
 
 if __name__ == '__main__':
+	result_dict = {}
 
-	for i in range(0,6):
-		MRindex.run()
+	i = 0 
+	MRindex.run()
+	# print(result_dict)
+	# with open('output.csv', 'w') as f:
+	# 	f.write('combine, freq\n')
+	# 	for key in result_dict.keys():
+	# 		f.write("%s,%s\n"%(key,result_dict[key]))
