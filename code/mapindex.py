@@ -25,9 +25,9 @@ import mapindex_util
 
 class MRindex(MRJob):
 
-	def mapper_init(self):
+	# def mapper_init(self):
 
-		mapindex_util = self.mapindex_util
+	# 	# import mapindex_util
 
 	# 	self.KMEANS_1 = remarks.kmeans1
 	# 	self.KMEANS_2 = remarks.kmeans2
@@ -92,6 +92,7 @@ class MRindex(MRJob):
 
 			try:
 				key, value = mapindex_util.get_index(row)
+				# print(key, value)
 				yield key, value
 			
 			except:
