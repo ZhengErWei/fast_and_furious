@@ -27,10 +27,3 @@ Directory for CAPP 30123 (Computer Science with Applications-3) Group Project
 9. https://foursquare.com/top-places/new-york-city/best-places-nightclubs
 10. https://theculturetrip.com/north-america/usa/new-york/articles/the-11-best-nightclubs-in-new-york-city/
 11. https://www.10best.com/destinations/new-york/new-york/nightlife/dance-clubs/
-
-# Google BigQuery
-1. http://www.danielforsyth.me/mapping-nyc-taxi-data/
-2. https://github.com/marcusohanlon/BigQuery---NYC-Taxi-Data/blob/master/Google_BigQuery_Data_Analysis.ipynb
-3. https://cloud.google.com/bigquery/public-data/nyc-tlc-trips
-4. https://cloud.google.com/blog/big-data/2017/02/google-cloud-platform-for-data-scientists-using-jupyter-notebooks-with-apache-spark-on-google-cloud
-5. http://nbviewer.jupyter.org/gist/MarcusoHanlon/4bc59cdf15bc3e9270d0
