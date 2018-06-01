@@ -63,8 +63,8 @@ class MRcontrol(MRJob):
 			min_diff = 6
 			for tup in diff_tup:
 				diff = tup[i]
-				if diff < min_diff:
-					min_diff = diff
+				if abs(diff) < min_diff:
+					min_diff = abs(diff)
 					rv = tup[6]
 			label = self.vars[i]
 			value = (line[i], target_val, line[i] - min_diff, rv)
