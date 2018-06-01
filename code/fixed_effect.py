@@ -22,7 +22,7 @@ class MRcontrol(MRJob):
 	def mapper_init(self):
 
 		# self.files = ['raw_2015_07_time.csv']
-		self.files = ['raw_sample_tip_2.csv']
+		self.files = ['Book2.csv']
 		# self.files = ['raw_sample_time.txt']
 		self.vars = ['weather_st_ind', 'weather_end_ind', 'loc_ind', 'weekday_ind', 'hour_ind', 'month_ind']
 
@@ -43,7 +43,7 @@ class MRcontrol(MRJob):
 							rv = diff + [ind[6]]
 
 							key = tuple(target)
-							# print(key, tuple(rv))
+							
 							yield key, tuple(rv)
 						except:
 							key = None
@@ -56,19 +56,37 @@ class MRcontrol(MRJob):
 		self.vars = ['weather_st_ind', 'weather_end_ind', 'loc_ind', 'weekday_ind', 'hour_ind', 'month_ind']
 
 
+	def abs_smaller(self, list1, list2):
+
+		for i in range(5):
+			if list1[i] > list2[i]:
+				return False
+
+		return True
+
+
 	def reducer(self, line, diff_tup):
 
 		target_ind_1, target_ind_2, target_ind_3, target_ind_4, target_ind_5, target_ind_6, target_val = line
 		for i in range(6):
-			min_diff = 6
-			for tup in diff_tup:
-				diff = tup[i]
-				if abs(diff) < min_diff:
-					min_diff = abs(diff)
-					rv = tup[6]
-			label = self.vars[i]
-			value = (line[i], target_val, line[i] - min_diff, rv)
+			min_diff = [6, 6, 6, 6, 6]
 
+
+			ind_list = [0, 1, 2, 3, 4, 5, 6]
+			ind_rest = list(set(ind_list) - set([i]))
+
+
+			for tup in diff_tup:
+				tup_list = [list(tup)[i] for i in ind_rest]
+				if self.abs_smaller(tup_list, min_diff):
+					min_diff = tup_list
+					rv_diff = tup[i]
+					rv_val = tup[6]
+
+			label = self.vars[i]
+
+			value = (line[i], target_val, line[i] - rv_diff, rv_val)
+			
 			yield label, value
 
 
