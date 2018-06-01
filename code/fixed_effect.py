@@ -22,33 +22,32 @@ class MRcontrol(MRJob):
 	def mapper_init(self):
 
 		# self.files = ['raw_2015_07_time.csv']
-		self.files = ['Book2.csv']
-		# self.files = ['raw_sample_time.txt']
+		# self.files = ['Book2.csv']
+		self.files = ['raw_sample_time_2.csv']
 		self.vars = ['weather_st_ind', 'weather_end_ind', 'loc_ind', 'weekday_ind', 'hour_ind', 'month_ind']
 
 
 	def mapper(self, _, line):
 
-		try:	
-			line = next(csv.reader([line]))
-			target = self.clean_raw_ind_data(line)
-			# target_ind_1, target_ind_2, target_ind_3, target_ind_4, target_ind_5, target_ind_6, target_val  = target
-			for file in self.files:
-				with open(file, 'r') as f:
-					rb = csv.reader(f)
-					for row in rb:
-						try:
-							ind = self.clean_raw_ind_data(row)
-							diff = [i - j for i, j in zip(target[:6], ind[:6])]
-							rv = diff + [ind[6]]
+		line = next(csv.reader([line]))
+		target = self.clean_raw_ind_data(line)
+		# target_ind_1, target_ind_2, target_ind_3, target_ind_4, target_ind_5, target_ind_6, target_val  = target
+		for file in self.files:
+			with open(file, 'r') as f:
+				rb = csv.reader(f)
+				for row in rb:
+					try:
+						ind = self.clean_raw_ind_data(row)
+						diff = [i - j for i, j in zip(target[:6], ind[:6])]
+						rv = diff + [ind[6]]
 
-							key = tuple(target)
-							
-							yield key, tuple(rv)
-						except:
-							key = None
-		except:
-			key = None
+						key = tuple(target)
+						
+						yield key, tuple(rv)
+
+					except:
+						key = None
+
 
 
 	def reducer_init(self):
