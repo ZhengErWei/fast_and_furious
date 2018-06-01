@@ -3,6 +3,7 @@ import csv
 import mapindex_util
 import clean_output
 import numpy as np
+import sys
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -13,19 +14,18 @@ size = comm.Get_size()
 def get_the_best_fit(target_row):
 
 	key, value = mapindex_util.get_index(target_row)
-	key_sum = sum(key)
 
 	if rank == 0:
-		filenames = ['raw_2015_07_time.csv', 'raw_2015_08_time.csv', 
-					 'raw_2015_09_time.csv', 'raw_2015_10_time.csv', 
-					 'raw_2015_11_time.csv', 'raw_2015_12_time.csv',
-					 'raw_2016_01_time.csv', 'raw_2016_02_time.csv',
-					 'raw_2016_03_time.csv', 'raw_2016_04_time.csv', 
-					 'raw_2016_05_time.csv', 'raw_2016_06_time.csv']
-	    
-	    chunks = np.array_split(filenames, size)
+		# filenames = ['raw_2015_07_time.csv', 'raw_2015_08_time.csv', 
+		# 			 'raw_2015_09_time.csv', 'raw_2015_10_time.csv', 
+		# 			 'raw_2015_11_time.csv', 'raw_2015_12_time.csv',
+		# 			 'raw_2016_01_time.csv', 'raw_2016_02_time.csv',
+		# 			 'raw_2016_03_time.csv', 'raw_2016_04_time.csv', 
+		# 			 'raw_2016_05_time.csv', 'raw_2016_06_time.csv']
+		filenames = ['raw_2015_07_time.csv']
+		chunks = np.array_split(filenames, size)
 	else:
-	    chunks = None
+		chunks = None
 
 
 	chunk = comm.scatter(chunks, root=0) 
@@ -36,18 +36,19 @@ def get_the_best_fit(target_row):
 		with open(filename, 'r') as f:
 			rb = csv.reader(f)
 			for row in rb:
+				sse = 0
 				try:
-					ind, y = clean_output.clean_raw_ind_data(row)
-					ind_sum = sum([float(i) for i in ind])
-					y = float(y)
-					diff = abs(key_sum - ind_sum)
-					if diff < min_diff:
-						pred = y
+					ind = clean_output.clean_raw_ind_data(row)
+					for i in range(6):
+						sse += (ind[i] - key[i]) ** 2
+					if sse < min_diff:
+						pred = ind[6]
+						min_diff = sse
 				except:
 					continue
 
-	results = comm.gather(pred, root=0)
-	rv = results[np.abs(results - value).argmin()]
+	results = comm.gather((sse, pred), root=0)
+	rv = min(results, key = lambda t: t[0])[1]
 
 	return rv
 
@@ -57,10 +58,13 @@ if __name__ == '__main__':
 		rb = csv.reader(f)
 		next(f)
 		for row in rb:
-			pred = get_the_best_fit(row)
-			rv = row + pred
-			with open(outputfile, 'a') as f2:
-				wb = csv.writer(f2, delimiter=',')
-				wb.writerow(rv)
+			try:
+				pred = get_the_best_fit(row)
+				rv = row + [pred]
+				with open(outputfile, 'a') as f2:
+					wb = csv.writer(f2, delimiter=',')
+					wb.writerow(rv)
+			except:
+				continue
 
 
