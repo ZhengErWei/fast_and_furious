@@ -129,18 +129,18 @@ class MRindex(MRJob):
 	def get_index(self, row):
 
 
-		start_date, start_hour = row[2].split(':')[0].split(' ')
+		start_date, start_hour = row[1].split(':')[0].split(' ')
 		start_hour = str(int(start_hour))
 		year, month, date = start_date.split('-')
 		start_date = ''.join([year, month, date])
-		end_date, end_hour = row[3].split(':')[0].split(' ')
+		end_date, end_hour = row[2].split(':')[0].split(' ')
 		end_date = ''.join(end_date.split('-'))
 		end_hour = str(int(end_hour))
 
-		pick_lon = float(row[6])
-		pick_lat = float(row[7])
-		drop_lon = float(row[10])
-		drop_lat = float(row[11])
+		pick_lon = float(row[5])
+		pick_lat = float(row[6])
+		drop_lon = float(row[9])
+		drop_lat = float(row[10])
 
 		#weather index
 		start_weather_tup = (start_date, start_hour)
@@ -172,7 +172,7 @@ class MRindex(MRJob):
 		# time_diff = (end_time - start_time).total_seconds()/60
 		# value = time_diff/distance
 
-		value = float(row[16])/float(row[13])
+		value = float(row[15])/float(row[12])
 
 		return key, value
 
@@ -180,13 +180,12 @@ class MRindex(MRJob):
 	def mapper(self, _, line):
 
 		row = next(csv.reader([line]))
-		if (len(row) > 0) and (row[1] != 'VendorID'):
+		if (len(row) > 0) and (row[0] != 'VendorID'):
 
 			try:
 				key, value = self.get_index(row)
 
 
-				print(key, value)
 				yield key, value
 			except:
 				key = 'None'
