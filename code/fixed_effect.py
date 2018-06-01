@@ -21,13 +21,13 @@ class MRcontrol(MRJob):
 
 	def mapper_init(self):
 
-		self.files = ['raw_2016_02_time.csv']
-		# self.files = ['raw_2016_06_time.csv']
+		# self.files = ['raw_2015_07_time.csv']
+		self.files = ['raw_sample_tip_2.csv']
+		# self.files = ['raw_sample_time.txt']
 		self.vars = ['weather_st_ind', 'weather_end_ind', 'loc_ind', 'weekday_ind', 'hour_ind', 'month_ind']
 
 
 	def mapper(self, _, line):
-
 
 		try:	
 			line = next(csv.reader([line]))
@@ -43,6 +43,7 @@ class MRcontrol(MRJob):
 							rv = diff + [ind[6]]
 
 							key = tuple(target)
+							# print(key, tuple(rv))
 							yield key, tuple(rv)
 						except:
 							key = None
