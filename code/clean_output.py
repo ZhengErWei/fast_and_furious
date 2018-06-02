@@ -18,20 +18,22 @@ def clean_raw_sample_data(ipfile, opfile):
 
 	return
 
-def clean_raw_ind_data(row):
+def clean_raw_ind_data(self, row):
 
-	for row in rb:
-		ind_1 = row[0].strip("'[")
-		ind_2 = row[1].strip(" '")
-		ind_3 = row[2].strip(" '")
-		ind_4 = row[3].strip(" '")
-		ind_5 = row[4].strip(" '")
-		ind_6, y = row[5].strip(" '").split(']\t')
-			# with open(opfile, 'a') as f2:
-			# 	wb = csv.writer(f2, delimiter=',')
-			# 	wb.writerow([ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y])
+	# ind_1 = row[0].strip("'[")
+	# ind_2 = row[1].strip(" '")
+	# ind_3 = row[2].strip(" '")
+	# ind_4 = row[3].strip(" '")
+	# ind_5 = row[4].strip(" '")
+	# ind_6, y = row[5].strip(" '").split(']\t')
 
-	return [ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y]
+	ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y = row[1:]
+
+	rv = [ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y]
+	rv = [float(a) for a in rv]
+
+	return rv
+
 
 
 # if __name__ == '__main__':

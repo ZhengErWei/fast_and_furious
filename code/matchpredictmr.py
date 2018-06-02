@@ -95,7 +95,7 @@ class MRmatch(MRJob):
 		self.WEEK_INDEX.set_index('day')
 
 		# self.filenames = ['raw_2015_08_time.csv']
-		self.filenames = ['raw_sample_time.csv']
+		self.filenames = ['raw_sample_time_2.csv']
 
 		self.min_diff = [6] * 6
 
@@ -181,14 +181,16 @@ class MRmatch(MRJob):
 		return key, value
 
 
-	def clean_raw_ind_data(self, row):		
+	def clean_raw_ind_data(self, row):
 
-		ind_1 = row[0].strip("'[")
-		ind_2 = row[1].strip(" '")
-		ind_3 = row[2].strip(" '")
-		ind_4 = row[3].strip(" '")
-		ind_5 = row[4].strip(" '")
-		ind_6, y = row[5].strip(" '").split(']\t')
+		# ind_1 = row[0].strip("'[")
+		# ind_2 = row[1].strip(" '")
+		# ind_3 = row[2].strip(" '")
+		# ind_4 = row[3].strip(" '")
+		# ind_5 = row[4].strip(" '")
+		# ind_6, y = row[5].strip(" '").split(']\t')
+
+		ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y = row[1:]
 
 		rv = [ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y]
 		rv = [float(a) for a in rv]
@@ -225,25 +227,25 @@ class MRmatch(MRJob):
 	def mapper(self, _, line):
 
 		row = next(csv.reader([line]))
-		if (len(row) > 0) and (row[1] != 'VendorID'):
-			try:
-				key, value = self.get_index(row)
-				key_list = [a for a in key] + [value]
-				for file in self.filenames:
-					dir_name = file
-					with open(dir_name, 'r') as f:
-						rb = csv.reader(f)
-						for row_ind in rb:
-							ind_list = self.clean_raw_ind_data(row_ind)
-							result = self.is_smallest(key, ind_list[:6], self.min_diff)
-							if result:
-								self.min_diff = result
-								rv = ind_list
-
-				yield row, ind_list
-							
-			except:
-				row = None
+		
+		if 
+		try:
+			key, value = self.get_index(row)
+			key_list = [a for a in key] + [value]
+			for file in self.filenames:
+				dir_name = file
+				with open(dir_name, 'r') as f:
+					rb = csv.reader(f)
+					for row_ind in rb:
+						ind_list = self.clean_raw_ind_data(row_ind)
+						result = self.is_smallest(key, ind_list[:6], self.min_diff)
+						if result:
+							self.min_diff = result
+							rv = ind_list
+			yield row, ind_list
+						
+		except:
+			row = None
 
 
 	def reducer_init(self):
@@ -330,8 +332,8 @@ class MRmatch(MRJob):
 		self.WEEK_INDEX.columns = ['day', 'index']
 		self.WEEK_INDEX.set_index('day')
 
-		# self.filenames = ['raw_2015_08_time.csv']
-		self.filenames = ['raw_sample_time.csv']
+		self.filenames = ['raw_sample_time_2.csv']
+		# self.filenames = ['raw_time_total_1.csv', 'raw_time_total_2.csv']
 
 
 
