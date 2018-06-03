@@ -9,13 +9,13 @@ Traffic Pattern Detection Based on New York Yellow Taxi Dataset
 This project looks at causal relationship between several factors and traffic time by using big data technique mapreduce and mpi. Factors include weather, time and location. Different algorithms are also used to predict traffic time by using those variables. The project looks at single trip and pair of trip.
 
 # Structure of repo
-- report: final presentation and final report can be found here.
-- code: all the code we write can be found here.
-  - generating index
-  - single trip
-  - matching pair
-  - passenger privacy  
-- data: sample data used or generated in the process can be found here.
+- <code>report<code>: project proposal, final presentation and final report can be found here.
+- <code>code<code>: all the code we write can be found here.
+  - index - generates index on weather, location, and time (month, weekday and hour)
+  - single trip - predicts traffict time by multiple regression
+  - matching pair - looks at causal effect of six variables on traffic time difference by simple linear regression and predicts difference of traffic time by matching pair
+  - passenger privacy  - deannonymizing interesting trip
+- <code>data<code>: sample data used or generated can be found here.
 
 
 # References
