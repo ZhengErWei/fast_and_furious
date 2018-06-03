@@ -3,6 +3,8 @@ Directory for CAPP 30123 (Computer Science with Applications-3) Group Project
 
 Traffic Pattern Detection Based on New York Yellow Taxi Dataset
 
+This project looks at causal relationship between several factors and traffic time by using big data technique mapreduce and mpi. Factors including weather, time and location. We also use different algorithms to predict pair differences in traffic time.
+
 # Structure of repo
 - report: final presentation and final report can be found here.
 - code: all the code we write can be found here.
