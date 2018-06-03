@@ -196,7 +196,7 @@ class MRindex(MRJob):
 		value = time_diff/distance
 
 		# when y is tip rate
-		value = float(row[15])/float(row[12])
+		# value = float(row[15])/float(row[12])
 
 		return key, value
 
