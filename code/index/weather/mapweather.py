@@ -13,7 +13,7 @@ size = comm.Get_size()
 
 def get_weather_chunk(filename):
 	'''
-	To divide the weather file into different chunks and allocate to 
+	To divide the weather file into different chunks and allocate them 
 	different nodes.
 	
 	Input: string
