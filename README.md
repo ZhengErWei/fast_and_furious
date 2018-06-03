@@ -2,7 +2,7 @@
 
 University of Chicago | Spring 2018
 
-Repository for CMSC12300 (Computer Science with Applications-3) Group Project
+Repository for CMSC 12300 (Computer Science with Applications-3) Group Project
 
 Traffic Pattern Detection Based on New York Yellow Taxi Dataset
 
