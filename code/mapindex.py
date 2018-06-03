@@ -1,5 +1,5 @@
 # run this file to get six index (tip rate or traffic time)
-# on sample or original dataset
+# on sample or original datasets
 # command: python3 thisfile input > output
 
 from mrjob.job import MRJob
