@@ -1,6 +1,8 @@
-# run this file to get six index (tip rate or traffic time)
-# on sample or original datasets
+# Purpose: run this file to get six index (tip rate or traffic time)
+#  	   on sample or original datasets
+#
 # command: python3 thisfile input > output
+# p.s. all data file imported in this file should be put in the same directory
 
 from mrjob.job import MRJob
 import csv
