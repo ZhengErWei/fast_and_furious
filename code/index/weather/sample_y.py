@@ -1,13 +1,15 @@
-# use this file to get the value of dependent variables tip rate or 
-# travel time per mile with the weather values of the of a given taxi file
+# Purpose: get the value of dependent variable (tip rate or traffic time) 
+#          with the weather of the of a given sample taxi file
+
 # command: python3 thisfile y('time' or 'tip') outputfile
 
 import pandas as pd 
 from math import sin, cos, sqrt, atan2, radians
 import sys
 
-# Need to put these two files within the same directory as this file
+# Need to put these two files within the same directory 
 # Go to these files in ../../data
+
 WEATHER_DF = pd.read_csv('sample_weather.csv')[['s_cond', 's_visi']]
 SAMPLE_DF = pd.read_csv('sample_trip.csv')[['tpep_pickup_datetime', \
  													'tpep_dropoff_datetime', \
