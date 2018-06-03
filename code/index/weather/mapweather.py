@@ -12,6 +12,13 @@ rank = comm.Get_rank()
 size = comm.Get_size()
 
 def get_weather_chunk(filename):
+	'''
+	To divide the weather file into different chunks and allocate to 
+	different nodes.
+	
+	Input: string
+	Output: pandas dataframe
+	'''
 
 	df = pd.read_csv(filename)
 	time_df = df[['tpep_pickup_datetime', 'tpep_dropoff_datetime']]
