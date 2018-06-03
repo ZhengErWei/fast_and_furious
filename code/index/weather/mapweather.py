@@ -27,8 +27,7 @@ def get_weather_chunk(filename):
 
 
 if __name__ == '__main__':
-	# sample_file is the input file, op_file is the output file
-	# they can be checked in .../../data
+	
 	sample_file = 'sample_trip.csv'
 	op_file = 'sample_weather.csv'
 	weather_df = get_weather_chunk(sample_file)
