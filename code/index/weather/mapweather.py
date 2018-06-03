@@ -1,6 +1,8 @@
-# map weather condition to the sample dataset/large dataset using mpi
-# can use file in ../../../data/sample.csv as the first input
-# command python3 thisfile inputfile(taxi trip) outputfile
+# Purpose: map weather condition to the sample dataset/large dataset using mpi
+# 	   you can use file in ../../../data/sample.csv as the first input
+#
+# command: python3 thisfile inputfile outputfile
+# inputfile: ../../data/sample_trip.csv
 
 import mapweather_util
 from mpi4py import MPI 
