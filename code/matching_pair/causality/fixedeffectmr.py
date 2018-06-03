@@ -1,8 +1,10 @@
-# use this file to find the most similar trip 
-# by comparing the five indices and look at
-# the relationship between pair differences
-# of the last index and y variable
-# sample output can be check in ../../data/fix_sample.csv
+# Purpose: use this file to find the most similar trip 
+#          by comparing the five indices and look at
+#          the relationship between pair differences
+#  	   of the last index and y variable
+# Input: 
+# p.s. sample output can be check in ../../data/fix_sample.csv
+
 
 from mrjob.job import MRJob
 import csv
