@@ -63,6 +63,8 @@ def get_the_best_fit(target_row):
 				return target[3]
 			else:
 				return target[1]
+		else:
+			return 
 	except:
 		return None
 
