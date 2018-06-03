@@ -1,5 +1,5 @@
 # Fast & Furious
-Directory for CAPP 30123 (Computer Science with Applications-3) Group Project
+Repository for CAPP 30123 (Computer Science with Applications-3) Group Project
 
 Traffic Pattern Detection Based on New York Yellow Taxi Dataset
 
@@ -18,3 +18,16 @@ This project looks at causal relationship between several factors and traffic ti
 # References
 1. http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml
 2. http://toddwschneider.com/posts/analyzing-1-1-billion-nyc-taxi-and-uber-trips-with-a-vengeance/
+
+
+## Contributors
+**Hyun Ki Kim** [coreanokim](https://github.com/coreanokim)
+
+**Andi Liao** [liaoandi](https://github.com/liaoandi)
+
+**Winston Zunda Xu** [zundaxu](https://github.com/zundaxu)
+
+**Weiwei Zheng** [ZhengErWei](https://github.com/ZhengErWei)
+
+We would like to express our sincere gratitude to **Dr. Matthew Wachs** for 
+your teaching, guidance, and support throughout the quarter.
