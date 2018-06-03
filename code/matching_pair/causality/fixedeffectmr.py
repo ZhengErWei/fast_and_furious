@@ -4,6 +4,7 @@
 #  	   of the last index and y variable
 # Input: 
 # p.s. sample output can be check in ../../data/fix_sample.csv
+#      and all files should be put in the same directory
 
 
 from mrjob.job import MRJob
