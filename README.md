@@ -35,4 +35,4 @@ This project looks at causal relationship between several factors and traffic ti
 **Weiwei Zheng** [ZhengErWei](https://github.com/ZhengErWei)
 
 We would like to express our wholehearted gratitude to **Dr. Matthew Wachs** for 
-his support on our project.
+his support for our project.
