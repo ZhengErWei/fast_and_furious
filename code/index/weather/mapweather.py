@@ -4,7 +4,6 @@
 
 import mapweather_util
 from mpi4py import MPI 
-import sys
 import pandas as pd
 import numpy as np
 
@@ -13,13 +12,6 @@ rank = comm.Get_rank()
 size = comm.Get_size()
 
 def get_weather_chunk(filename):
-	'''
-	To divide the weather file into different chunks and allocate them 
-	different nodes.
-	
-	Input: string
-	Output: pandas dataframe
-	'''
 
 	df = pd.read_csv(filename)
 	time_df = df[['tpep_pickup_datetime', 'tpep_dropoff_datetime']]
@@ -34,7 +26,9 @@ def get_weather_chunk(filename):
 
 if __name__ == '__main__':
 	# sample_file is the input file, op_file is the output file
-	sample_file, op_file = sys.argv[1:]
+	# they can be checked in .../../data
+	sample_file = 'sample_trip.csv'
+	op_file = 'sample_weather.csv'
 	weather_df = get_weather_chunk(sample_file)
 	if rank == 0:
 		# weather_df = get_weather_chunk(sample_file)
@@ -56,9 +50,13 @@ if __name__ == '__main__':
 	rv = mapweather_util.get_all_weather(chunk, weather_df)
 	rv_all = pd.concat([chunk, rv], axis = 1)
 
+
 	gathered_dfs = comm.gather(rv, root = 0)
-	total_df = pd.concat(gathered_dfs)
-	total_df.to_csv(op_file)
+
+	if rank == 0:
+		target = list(np.concatenate((gathered_dfs)))
+		total_df = pd.concat(target)
+		total_df.to_csv(op_file)
 
 
 
