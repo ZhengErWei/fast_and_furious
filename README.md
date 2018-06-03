@@ -12,7 +12,7 @@ This project looks at causal relationship between several factors and traffic ti
 - <code>report</code>: project proposal, final presentation and final report can be found here.
 
 - <code>code</code>: all the code we write can be found here.
-  - index - generates index on weather, location, and time
+  - index - generates index on weather, location, and time over traffic time and tip rate
   - single trip - predicts traffict time on single trip
   - matching pair - looks at causality and predicts difference in traffic time between mathced pair of trips
   - passenger privacy  - deannonymizing interesting trip
