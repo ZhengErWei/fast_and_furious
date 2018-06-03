@@ -1,6 +1,10 @@
+# use mapreduce the calculate each (b0, b1) pair 
+# of the six index
+# python3 thisfile --jobconf mapreduce.job.reduces=1 inputfile
+# input file see fixed_effect_sample.csv in ../../data
+
 from mrjob.job import MRJob
 from mrjob.step import MRStep
-import math
 import csv
 
 
@@ -82,9 +86,6 @@ class MRpairreg(MRJob):
 		self.sxy = [0] * 6
 		self.beta_1 = [0] * 6
 		self.beta_0 = [0] * 6
-		# self.x_mean = [a/b for a, b in zip(self.x_sum, self.count)]
-		# self.y_mean = [a/b for a, b in zip(self.y_sum, self.count)]
-
 
 	def reducer_second(self, index, vals):
 
