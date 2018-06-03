@@ -382,7 +382,7 @@ class MRmatch(MRJob):
 		self.min_diff = [6] * 6
 
 
-# yield each trip and pred y
+# yield each trip and pred dependent y
 # output format see ../data/matchmr_sample.csv
 
 	def reducer(self, row, lists):
