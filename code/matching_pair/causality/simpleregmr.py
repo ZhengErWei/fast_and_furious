@@ -1,7 +1,7 @@
-# use mapreduce the calculate each (b0, b1) pair 
-# of the six index
-# python3 thisfile --jobconf mapreduce.job.reduces=1 inputfile
-# input file see fixed_effect_sample.csv in ../../data
+# Purpose: use mapreduce the calculate each (b0, b1) pair 
+#          of the six index
+# command: python3 thisfile --jobconf mapreduce.job.reduces=1 inputfile
+# p.s. input file see fixed_effect_sample.csv in ../../data
 
 from mrjob.job import MRJob
 from mrjob.step import MRStep
