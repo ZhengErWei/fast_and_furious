@@ -34,8 +34,13 @@ for ind, row in WEATHER_DF.iterrows():
 # for the sample data
 def get_weather_df(st, et):
 	'''
+	Input start date and end date and return the weather
+	dataframe in this time range.
+	
 	Inputs:
 	  st, et: string, '2016-01-01'
+	  
+	 Return: dataframe
 	 '''
 
 	st = ''.join(st.split('-'))
