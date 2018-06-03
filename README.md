@@ -13,8 +13,8 @@ This project looks at causal relationship between several factors and traffic ti
 
 - <code>code</code>: all the code we write can be found here.
   - index - generates index on weather, location, and time
-  - single trip - predicts traffict time by multiple regression
-  - matching pair - looks at causality by simple linear regression and predicts difference in traffic time by matching pair
+  - single trip - predicts traffict time on single trip
+  - matching pair - looks at causality and predicts difference in traffic time between mathced pair of trips
   - passenger privacy  - deannonymizing interesting trip
   
 - <code>data</code>: sample data used or generated can be found here.
