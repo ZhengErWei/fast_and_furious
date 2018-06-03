@@ -25,6 +25,9 @@ def clean_raw_ind_data(row):
 
 # scatter
 def get_the_best_fit(target_row):
+	'''
+	Get the most similar trip after looping over the two files
+	'''
 	
 	# here use try because there is some clusters not showing up in 
 	# sample trainig file
