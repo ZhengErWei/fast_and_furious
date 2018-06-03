@@ -14,11 +14,7 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 size = comm.Get_size()
 
-
 def clean_raw_ind_data(row):
-	'''
-	Use the function to clean output
-	'''
 
 	ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y = row[1:]
 
@@ -27,48 +23,49 @@ def clean_raw_ind_data(row):
 
 	return rv
 
-
 # scatter
 def get_the_best_fit(target_row):
-	'''
-	To get the best match by looking through 
-	all the rows in the given files
-	'''
+	
+	# here use try because there is some clusters not showing up in 
+	# sample trainig file
+	try:
+		key, value = mapindex_util.get_index(target_row)
 
-	key, value = mapindex_util.get_index(target_row)
-
-	if rank == 0:
-		# hard code the file name
-		# these two files can be checked in ../../data
-		filenames = ['raw_time_total_sample.csv', 'raw_time_total_sample_2.csv']
-		chunks = np.array_split(filenames, size)
-	else:
-		chunks = None
+		if rank == 0:
+			filenames = ['raw_time_total_sample.csv', 
+				     'raw_time_total_sample_2.csv']
+			chunks = np.array_split(filenames, size)
+		else:
+			chunks = None
 
 
-	chunk = comm.scatter(chunks, root=0) 
+		chunk = comm.scatter(chunks, root=0) 
 
 
-	min_diff = 6
-	for filename in chunk:
-		with open(filename, 'r') as f:
-			rb = csv.reader(f)
-			for row in rb:
-				sse = 0
-				try:
-					ind = clean_output.clean_raw_ind_data(row)
+		min_diff = 6
+		for filename in chunk:
+			with open(filename, 'r') as f:
+				rb = csv.reader(f)
+				for row in rb:
+					sse = 0
+					ind = clean_raw_ind_data(row)
 					for i in range(6):
 						sse += (ind[i] - key[i]) ** 2
 					if sse < min_diff:
 						pred = ind[6]
 						min_diff = sse
-				except:
-					continue
+			
+		results = comm.gather((min_diff, pred), root=0)
+		if rank == 0:
+			target = list(np.concatenate((results)))
 
-	results = comm.gather((sse, pred), root=0)
-	rv = min(results, key = lambda t: t[0])[1]
+			if target[0] >= target[2]:
+				return target[3]
+			else:
+				return target[1]
+	except:
+		return None
 
-	return rv
 
 if __name__ == '__main__':
 	inputfile = 'sample_trip_2.csv'
@@ -77,13 +74,11 @@ if __name__ == '__main__':
 		rb = csv.reader(f)
 		next(f)
 		for row in rb:
-			try:
-				pred = get_the_best_fit(row)
+			pred = get_the_best_fit(row)
+			if pred != None:
 				rv = row + [pred]
 				with open(outputfile, 'a') as f2:
 					wb = csv.writer(f2, delimiter=',')
 					wb.writerow(rv)
-			except:
-				continue
 
-
+ 
