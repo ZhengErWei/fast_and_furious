@@ -1,4 +1,5 @@
 #python3 reg_result_compare.py --jobconf mapreduce.job.reduces=1 sample_match_time.csv 
+# use this function to get mse of prediction made by matching pair and dummy regressor by mean
 
 from mrjob.job import MRJob
 from mrjob.step import MRStep
@@ -9,6 +10,7 @@ from datetime import datetime, date, timedelta
 
 class MRpairreg(MRJob):
 	
+	# this funciton copied from stackflow
 	def calculate_distance(self, lat1, lon1, lat2, lon2):
 	# approximate radius of earth in km
 		R = 6373.0
@@ -23,15 +25,8 @@ class MRpairreg(MRJob):
 
 		return distance
 
-
+	# when y is traffic time, clean the data and get the value
 	def get_index(self, row):
-		# start_date, start_hour = row[1].split(':')[0].split(' ')
-		# start_hour = str(start_hour)
-		# year, month, date = start_date.split('-')
-		# start_date = ''.join([year, month, date])
-		# end_date, end_hour = row[2].split(':')[0].split(' ')
-		# end_date = ''.join(end_date.split('-'))
-		# end_hour = str(int(end_hour))
 
 		pick_lon = float(row[6].strip(' "'))
 		pick_lat = float(row[7].strip(' "'))
