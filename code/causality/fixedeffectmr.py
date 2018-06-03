@@ -1,7 +1,7 @@
 # use this file to find the most similar trip 
-# by comparing the five indices to look into
+# by comparing the five indices and look at
 # the relationship between pair differences
-# of y and the other index
+# of the last index and y variable
 # sample output can be check in ../../data/fix_sample.csv
 
 from mrjob.job import MRJob
