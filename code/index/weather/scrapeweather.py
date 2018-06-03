@@ -1,5 +1,5 @@
 # run this file to scrape all the weather data within the given time range
-# and write it into a csv file. 
+# and write it into a csv file
 # command: python3 thisfile output
 
 from WunderWeather import weather
@@ -55,6 +55,7 @@ def get_weather(date, output):
 	'windchilli', 'heatindexm', 'heatindexi', 'precipm', 'precipi', 
 	'conds', 'icon', 'fog', 'rain', 'snow', 'hail', 'thunder', 'tornado', 
 	'metar'
+	add more dictionary keys
 	'''
 
 	d =  arrow.get(date, 'YYYYMMDD')
