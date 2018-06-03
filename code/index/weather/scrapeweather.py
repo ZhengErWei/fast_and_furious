@@ -1,5 +1,6 @@
-# run this file to scrape all the weather data within the given time range
-# and write it into a csv file
+# Purpose: To scrape all the weather data within the given time range
+# 	    and write it into a csv file
+#
 # command: python3 thisfile output
 
 from WunderWeather import weather
