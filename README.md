@@ -1,4 +1,7 @@
 # Fast & Furious
+
+University of Chicago | Spring 2018
+
 Repository for CAPP 30123 (Computer Science with Applications-3) Group Project
 
 Traffic Pattern Detection Based on New York Yellow Taxi Dataset
@@ -29,5 +32,5 @@ This project looks at causal relationship between several factors and traffic ti
 
 **Weiwei Zheng** [ZhengErWei](https://github.com/ZhengErWei)
 
-We would like to express our sincere gratitude to **Dr. Matthew Wachs** for 
-your teaching, guidance, and support throughout the quarter.
+We would like to express our wholehearted gratitude to **Dr. Matthew Wachs** for 
+your support on our project.
