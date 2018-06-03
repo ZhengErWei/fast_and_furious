@@ -1,5 +1,5 @@
 # Purpose: use this file to clean the mapreduce result 
-#           on location or weather on sample_trip.csv
+#           
 # Command: python3 clean_output.py inputfile outputfile
 
 
