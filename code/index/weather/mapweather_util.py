@@ -1,6 +1,6 @@
-# helper function used by mapweather.py and etc. 
-# need to put weather_201507_2016_06.csv in ../../../data/ in the same
-# folder to run the file
+# Purpose: helper function used by mapweather.py and etc. 
+# p.s. need to put weather_201507_2016_06.csv in ../../../data/ 
+#      in the same folder to use this file
 
 import pandas as pd
 from datetime import datetime, date, timedelta
@@ -100,6 +100,9 @@ def get_weather(date_time, df):
 	return rv
 
 def get_all_weather(target_df, weather_df):
+	'''
+	Get all the weather of a given dataframe
+	'''
 
 	all_rv = []
 	for ind, row in target_df.iterrows():
