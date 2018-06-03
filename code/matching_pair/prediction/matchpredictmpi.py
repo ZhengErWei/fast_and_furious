@@ -1,8 +1,6 @@
-# run this file to get prediction of each row by looking 
-# at the sum of squared difference of the six index
+# Purpose: To get prediction of each row by looking at the sum of squared difference of the six index
 # command: python3 thisfile
-# mapindex_util.py, mapweather_util.py and all files 
-# imported from these files should be put in the same folder
+# p.s. mapindex_util.py, mapweather_util.py and all files imported from these files should be put in the same folder
 
 from mpi4py import MPI 
 import csv
