@@ -73,10 +73,12 @@ class MRpairreg(MRJob):
 		for key, values in self.data_dict.items():
 			for value in values:
 				x_diff, y_diff = value
-				sxy = (x_diff - self.x_mean[index]) * (y_diff - self.y_mean[index])
-				sxx = math.power((x_diff - self.x_mean[index]),2)
+				sxy = (x_diff - self.x_mean[key]) * (y_diff - self.y_mean[key])
+				sxx = (x_diff - self.x_mean[key]) ** 2
 				value = (sxy, sxx)
 				yield key, value
+
+		yield 'parameter', (self.x_mean, self.y_mean, self.count)
 
 
 
@@ -86,22 +88,33 @@ class MRpairreg(MRJob):
 		self.sxy = [0] * 6
 		self.beta_1 = [0] * 6
 		self.beta_0 = [0] * 6
+		self.x_mean = [0] * 6
+		self.y_mean = [0] * 6
+		self.count = [0] * 6
+		# self.x_mean = [a/b for a, b in zip(self.x_sum, self.count)]
+		# self.y_mean = [a/b for a, b in zip(self.y_sum, self.count)]
+
 
 	def reducer_second(self, index, vals):
 
-		for val in vals:
-			sxy, sxx = value
-			self.sxy[index] += sxy
-			self.sxx[index] += sxx
+		if index == 'parameter':
+			for val in vals:
+				self.x_mean, self.y_mean, self.count = val
+		else:
+			for val in vals:
+				sxy, sxx = val
+				self.sxy[index] += sxy
+				self.sxx[index] += sxx
 
 	def reducer_second_final(self):
 
 		self.beta_1 = [a/b for a, b in zip(self.sxy, self.sxx)]
 		self.beta_0 = [a - b * c for a, b, c in zip(self.y_mean, self.x_mean, self.beta_1)]
 
+	
 		for i in range(6):
-			yield 'beta_0', beta_0[i]
-			yield 'beta_1', beta_1[i]
+			yield  'beta_0', self.beta_0[i]
+			yield  'beta_1', self.beta_1[i]
 
 
 	def steps(self):
