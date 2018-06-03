@@ -1,7 +1,12 @@
+# run this file to scrape all the weather data within the given time range
+# and write it into a csv file. 
+# command: python3 thisfile output
+
 from WunderWeather import weather
 import arrow
 import csv
 from datetime import date, timedelta
+import sys
 
 KEY = '534fe8de0c6c00ce'
 LOCATION = 'NY/New York'
@@ -17,8 +22,10 @@ COLUMNS = ['VendorID', 'tpep_pickup_datetime', 'tpep_dropoff_datetime',
 
 def get_all_dates(start_y, start_m, start_d, end_y, end_m, end_d):
 	'''
+	Get all the date time within the given time range.
+
 	Input:
-	  e.g. 2017, 1, 1, 2017, 12, 31
+	  int, e.g. 2017, 1, 1, 2017, 12, 31
 
 	Return: a list
 	'''
@@ -36,8 +43,10 @@ def get_all_dates(start_y, start_m, start_d, end_y, end_m, end_d):
 
 
 
-def get_weather(date):
+def get_weather(date, output):
 	'''
+	Get the weather of the specific date and write it into a file.
+
 	date : e.g. '20170801'
 
 	data you can get: 'date', 'utcdate', 'tempm', 'tempi', 'dewptm', 
@@ -59,7 +68,7 @@ def get_weather(date):
 		snow = obs['snow']
 		conds = obs['conds']
 		data_list = [date, hour, minute, visi, rain, snow, conds]
-		with open('../data/weather_2015_7.csv', 'a') as f:
+		with open(output, 'a') as f:
 			wb = csv.writer(f, delimiter = ',')
 			wb.writerow(data_list)
 
@@ -67,9 +76,12 @@ def get_weather(date):
 
 
 if __name__ == '__main__':
+	output = sys.argv[1:]
+
+	#hard code here
 	date_list = get_all_dates(2015, 7, 1, 2016, 6, 30) 
 	for date in date_list:
-		get_weather(date)
+		get_weather(date, output)
 
 
 
