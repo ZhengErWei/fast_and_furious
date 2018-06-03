@@ -1,9 +1,10 @@
-# use this file to get value of y of the most similar trip
-# after comparing each index of each row in a given file
-# and get the match with smallest differnce of each index
+# Purpose: use this file to get value of y of the most similar trip
+#          after comparing each index of each row in a given file
+#          and get the match with smallest differnce of each index.
+#          use the y as prediction
 
 # command: python3 thisfile inputdata
-# You can use sample_trip_2.csv in ../data
+# Input: ../../data
 
 from mrjob.job import MRJob
 import csv
