@@ -1,9 +1,13 @@
+# helper function used by mapweather.py and etc. 
+# need to put weather_201507_2016_06.csv in ../../../data/ in the same
+# folder to run the file
+
 import pandas as pd
 from datetime import datetime, date, timedelta
 from dateutil.rrule import rrule, DAILY, HOURLY
 
 
-WEATHER_DF = pd.read_csv('../data/weather_201507_201606.csv')
+WEATHER_DF = pd.read_csv('weather_201507_201606.csv')
 WEATHER_DF.columns = ['date', 'hour', 'minute', 'visibility', 'cond']
 WEATHER_DF['visibility'].replace(-9999, 10, inplace=True)
 WEATHER_DF['date'] = WEATHER_DF['date'].astype(str)
@@ -13,9 +17,6 @@ for ind, row in WEATHER_DF.iterrows():
 	if row['cond'] == 'Unknown':
 		WEATHER_DF.loc[ind, 'cond'] = WEATHER_DF.iloc[ind - 1]['cond']
 
-# TRIP_DF = pd.read_csv('../data/yellow_tripdata_2016-01.csv')
-# TRIP_DF = TRIP_DF.dropna(how='any')
-# TARGET_DF = TRIP_DF[['tpep_pickup_datetime', 'tpep_dropoff_datetime']]
 
 HOUR_LIST = []
 START = date(2015, 7, 1)
@@ -143,7 +144,7 @@ def get_last_hour(key):
 
 
 
-
+# columns
 # cond_val = array(['Overcast', 'Partly Cloudy', 'Clear', 'Scattered Clouds',
 #        'Mostly Cloudy', 'Light Rain', 'Haze', 'Rain', 'Heavy Rain',
 #        'Light Snow', 'Snow', 'Heavy Snow', 'Light Freezing Fog',
