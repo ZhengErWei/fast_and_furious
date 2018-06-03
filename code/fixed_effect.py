@@ -25,7 +25,8 @@ class MRcontrol(MRJob):
 
 		# self.files = ['raw_2015_07_time.csv']
 		# self.files = ['Book2.csv']
-		self.files = ['raw_sample_time_2.csv']
+		# change the file name here
+		self.files = ['raw_time_total_1.csv', 'raw_time_total_2.csv']
 		self.vars = ['weather_st_ind', 'weather_end_ind', 'loc_ind', 'weekday_ind', 'hour_ind', 'month_ind']
 
 
