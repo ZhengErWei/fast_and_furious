@@ -36,8 +36,6 @@ def get_the_best_fit(target_row):
 
 		if rank == 0:
 			files = ['raw_time_sample.csv']
-# 			filenames = ['raw_time_total_sample.csv', 
-# 				     'raw_time_total_sample_2.csv']
 			chunks = np.array_split(filenames, size)
 		else:
 			chunks = None
