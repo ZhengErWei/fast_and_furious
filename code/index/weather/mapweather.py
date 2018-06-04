@@ -2,8 +2,8 @@
 # 	   you can use file in ../../../data/sample.csv as the first input
 #
 # command: python3 thisfile inputfile outputfile
-# inputfile: ../../data/sample_trip.csv
-# outputfile: ../../data/sample_weather.csv
+# inputfile: ../../../data/sample_trip.csv
+# outputfile: ../../../data/sample_weather.csv
 
 import mapweather_util
 from mpi4py import MPI 
