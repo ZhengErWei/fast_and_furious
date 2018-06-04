@@ -2,6 +2,7 @@
 # 	    and write it into a csv file
 #
 # command: python3 thisfile output
+# output: ../../../data/weather_201507_201606.csv
 
 from WunderWeather import weather
 import arrow
