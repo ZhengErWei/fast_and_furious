@@ -1,18 +1,36 @@
+# Purpose: get the value of dependent variable (tip rate or traffic time) 
+#          with the location(pick-up and drop-off) clusters of the taxi data
+#          record in a given data file.
+
 import pandas as pd 
 from math import sin, cos, sqrt, atan2, radians
 import sys
 from sklearn.cluster import KMeans
 import numpy as np
 
+
+# Define sample dataframe, which will be used in this part to train kmeans model to get the
+# pick-up and drop-off location clusters
 SAMPLE_DF = pd.read_csv('../../data/sample_trip.csv')[['tpep_pickup_datetime','tpep_dropoff_datetime',
             'pickup_longitude','pickup_latitude','dropoff_longitude','dropoff_latitude',
                                                     'fare_amount','tip_amount']]
-print(SAMPLE_DF.shape)
-# NONSAMPLE_DF = pd.read_csv('nonsample_trip.csv')[['tpep_pickup_datetime','tpep_dropoff_datetime',
-#             'pickup_longitude','pickup_latitude','dropoff_longitude','dropoff_latitude',
-#                                                     'fare_amount','tip_amount']]
+
+
 
 def calculate_distance(lat1, lon1, lat2, lon2):
+    '''
+    The function is used to calculate the distance between two locations given
+    their longitude and latitude.
+    
+    Input:
+    lat1: The latitude of the first point
+    lon1: The longitude of the first point
+    lat2: The latitude of the second point
+    lon2: The longitude of the second point
+    
+    Return:
+    distance: The distance between the input two points
+    '''
 # approximate radius of earth in km
     R = 6373.0
 
@@ -28,6 +46,19 @@ def calculate_distance(lat1, lon1, lat2, lon2):
 
 
 def k_means(df, n):
+    '''
+    The function is used to classify and get the n clusters of the pick-up location and drop-off
+    location of trip records in the input dataframe using kmeans model
+    
+    Inputs:
+    df: The dataframe used to train the kmeans model
+    n: The number of the clusters in the kmeans model
+    
+    Return:
+    coordinates: A dataframe contains the longitude and latitude of the pick-up location 
+                 and drop-off location, along with their locations clusters trained by kmeans
+                 model 
+    '''
     coordinates = df[["pickup_longitude","pickup_latitude","dropoff_longitude","dropoff_latitude"]]
 
     # filter = (coordinates['pickup_latitude'] <= -66.9513812) & (coordinates['pickup_longitude'] <= 49.3457868) \
@@ -47,6 +78,18 @@ def k_means(df, n):
 
 
 def get_sample_subset(y, df, location_df):
+    '''
+    The function is used to get the dataframe of all dependent variable values with the 
+    location condition (e.g. the pick-up cluster and the drop-off cluster)
+    
+    Input:
+    y: the string, 'tip' or 'time'
+    df: the dataframe used to calculate the dependent variable
+    location_df: the dataframe contains the location condition 
+    
+    Retrun: 
+    df_new: a new dataframe incluing the dependent variable and its related location cluster
+    '''
 
     if y == 'tip':
         rv = df['tip_amount'] / df['fare_amount']
