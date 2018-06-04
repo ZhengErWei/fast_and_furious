@@ -2,7 +2,7 @@
 #          with the weather of the of a given sample taxi file
 
 # command: python3 thisfile y('time' or 'tip') outputfile
-# outputfile: ../../../data/index/weather/sample_weather_time.csv
+# outputfile: ../../../data/index/weather/sample_weather_time.csv and sample_weather_tip.csv
 
 import pandas as pd 
 from math import sin, cos, sqrt, atan2, radians
