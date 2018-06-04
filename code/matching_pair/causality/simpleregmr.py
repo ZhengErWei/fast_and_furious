@@ -33,13 +33,11 @@ class MRpairreg(MRJob):
 		yield key, rv
 
 
-
 	def reducer_first_init(self):
 
 		self.count = [0] * 6
 		self.x_sum = [0] * 6
 		self.y_sum = [0] * 6
-
 		self.convert = {'weather_st_ind':0, 'weather_end_ind':1, 'loc_ind':2, 
 						'weekday_ind':3, 'hour_ind':4, 'month_ind': 5}
 		self.data_dict = {}
@@ -49,7 +47,6 @@ class MRpairreg(MRJob):
 
 	def reducer_first(self, key, vals):
 		
-		print(key)
 		index = self.convert[key]
 		for val in vals:
 			x_diff, y_diff = val
@@ -61,8 +58,7 @@ class MRpairreg(MRJob):
 			if index not in self.data_dict:
 				self.data_dict[index] = []
 			self.data_dict[index].append((x_diff, y_diff))
-			# self.data_dict[index].append((x_diff, y_diff))
-			# yield index, (x_diff, y_diff)
+			
 
 	def reducer_first_final(self):
 
@@ -81,7 +77,6 @@ class MRpairreg(MRJob):
 		yield 'parameter', (self.x_mean, self.y_mean, self.count)
 
 
-
 	def reducer_second_init(self):
 
 		self.sxx = [0] * 6
@@ -91,9 +86,7 @@ class MRpairreg(MRJob):
 		self.x_mean = [0] * 6
 		self.y_mean = [0] * 6
 		self.count = [0] * 6
-		# self.x_mean = [a/b for a, b in zip(self.x_sum, self.count)]
-		# self.y_mean = [a/b for a, b in zip(self.y_sum, self.count)]
-
+		
 
 	def reducer_second(self, index, vals):
 
@@ -106,11 +99,11 @@ class MRpairreg(MRJob):
 				self.sxy[index] += sxy
 				self.sxx[index] += sxx
 
+				
 	def reducer_second_final(self):
 
 		self.beta_1 = [a/b for a, b in zip(self.sxy, self.sxx)]
 		self.beta_0 = [a - b * c for a, b, c in zip(self.y_mean, self.x_mean, self.beta_1)]
-
 	
 		for i in range(6):
 			yield  'beta_0', self.beta_0[i]
@@ -131,5 +124,3 @@ class MRpairreg(MRJob):
 
 if __name__ == '__main__':
 	MRpairreg.run()
-
-
