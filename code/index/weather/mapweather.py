@@ -38,11 +38,6 @@ if __name__ == '__main__':
 		sample_df_time = sample_df[['tpep_pickup_datetime', \
 									'tpep_dropoff_datetime']]
 
-		# to make it efficient, we can sort date before processing
-		# sample_df_time = sample_df_time.sort_values(by = \
-		# 				['tpep_pickup_datetime', 
-		# 				'tpep_dropoff_datetime'])
-
 
 		chunks = np.split(sample_df_time, size)
 	else:
