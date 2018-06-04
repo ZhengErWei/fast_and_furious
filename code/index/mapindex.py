@@ -4,6 +4,7 @@
 # command: python3 thisfile input > output
 # p.s. all data file imported in this file should be put in the same directory
 # Output: ../../data/raw_sample_time.csv
+# Input: ../../data/sample_trip.csv
 
 from mrjob.job import MRJob
 import csv
@@ -150,18 +151,18 @@ class MRindex(MRJob):
 	def get_index(self, row):
 
 		# when deal with original taxi file all index after row plus one
-		start_date, start_hour = row[1].split(':')[0].split(' ')
+		start_date, start_hour = row[2].split(':')[0].split(' ')
 		start_hour = str(int(start_hour))
 		year, month, date = start_date.split('-')
 		start_date = ''.join([year, month, date])
-		end_date, end_hour = row[2].split(':')[0].split(' ')
+		end_date, end_hour = row[3].split(':')[0].split(' ')
 		end_date = ''.join(end_date.split('-'))
 		end_hour = str(int(end_hour))
 
-		pick_lon = float(row[5])
-		pick_lat = float(row[6])
-		drop_lon = float(row[9])
-		drop_lat = float(row[10])
+		pick_lon = float(row[6])
+		pick_lat = float(row[7])
+		drop_lon = float(row[10])
+		drop_lat = float(row[11])
 
 		#weather index
 		start_weather_tup = (start_date, start_hour)
@@ -199,7 +200,7 @@ class MRindex(MRJob):
 		value = time_diff/distance
 
 		# when y is tip rate
-		# value = float(row[15])/float(row[12])
+		# value = float(row[16])/float(row[13])
 
 		return key, value
 
@@ -207,7 +208,7 @@ class MRindex(MRJob):
 	def mapper(self, _, line):
 
 		row = next(csv.reader([line]))
-		if (len(row) > 0) and (row[0] != 'VendorID'):
+		if (len(row) > 0) and (row[1] != 'VendorID'):
 
 			try:
 				key, value = self.get_index(row)
