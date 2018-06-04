@@ -1,6 +1,7 @@
 # Purpose: use this file to get sample file of given size from all taxi dataset
 #          or index dataset
 # command: python3 thisfile
+# Output: ../../data/sample_trip.csv
 
 
 import pandas as pd 
