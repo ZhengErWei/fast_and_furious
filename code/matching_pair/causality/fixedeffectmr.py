@@ -3,6 +3,7 @@
 #          the relationship between pair differences
 #  	   of the last index and y variable
 # Input: ../../../data/raw_sample_time.csv
+# Output: ../../../data/fixed_effect.csv
 # p.s. sample output can be check in ../../data/fix_sample.csv
 #      and all files should be put in the same directory
 
