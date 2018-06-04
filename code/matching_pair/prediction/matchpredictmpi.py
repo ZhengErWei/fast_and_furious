@@ -1,6 +1,7 @@
 # Purpose: To get prediction of each row by looking at the sum of squared difference of the six index
 # command: python3 thisfile
 # p.s. mapindex_util.py, mapweather_util.py and all files imported from these files should be put in the same folder
+# Input: 
 
 from mpi4py import MPI 
 import csv
@@ -33,8 +34,9 @@ def get_the_best_fit(target_row):
 		key, value = mapindex_util.get_index(target_row)
 
 		if rank == 0:
-			filenames = ['raw_time_total_sample.csv', 
-				     'raw_time_total_sample_2.csv']
+			files = ['raw_time_sample.csv']
+# 			filenames = ['raw_time_total_sample.csv', 
+# 				     'raw_time_total_sample_2.csv']
 			chunks = np.array_split(filenames, size)
 		else:
 			chunks = None
