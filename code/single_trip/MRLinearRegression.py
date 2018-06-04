@@ -1,11 +1,13 @@
+# -*- coding: utf-8 -*-
 from mrjob.job import MRJob
 from mrjob.protocol import JSONProtocol, RawValueProtocol
 from mrjob.step import MRStep
 import numpy as np
+import csv
 
-####################################################################
-# Helper Function
-####################################################################
+
+# Helper Function -- Cholesky decomposition, which is used to get the coefficients of 
+# multiple linear regression
 
 def cholesky_decomposition(x_t_x,x_t_y):
     '''
@@ -14,14 +16,12 @@ def cholesky_decomposition(x_t_x,x_t_y):
     between explanatory variable and dependent variable.
     
     Inputs:
-    -------
     x_t_x : numpy array of size 'm x m', which is the sample covariance of explanatory 
             variables
     x_t_y : numpy array of size 'm x 1', which is the covariance between expalanatory and 
             dependent variable
     
-    Output:
-    -------
+    Return:
     beta : list of size m, which is the values of coefficients 
     '''
     # L*L.T*Theta = x_t_y
@@ -33,24 +33,8 @@ def cholesky_decomposition(x_t_x,x_t_y):
 
     return beta
 
-####################################################################
-# Helper Class
-####################################################################
 
-class DimensionMismatchError(Exception):
-
-    def __init__(self, expect_dim, observe_dim):
-        self.exp = expect_dim
-        self.obs = observe_dim
-        
-    def __str__(self):
-        error = "Expected number of dimensions: "+str(self.exp)+", observed: "+str(self.obs)
-        return error
-
-
-####################################################################
 # Mapreduce Job
-####################################################################
 
 class MRLinearRegression(MRJob):
     '''
@@ -68,55 +52,58 @@ class MRLinearRegression(MRJob):
 
     def __init__(self,*args, **kwargs):
         super(MRLinearRegression, self).__init__(*args, **kwargs)
-        n = self.options.dimension
+        n = 7
         self.x_t_x  = np.zeros([n,n])
         self.x_t_y  = np.zeros(n)
         self.counts = 0
 
     # feature extraction #
+
+    def clean_raw_ind_data(self, row):
+        '''
+        The function is used to clean the raw index and return a list of explanatory
+        variables and y variable
+
+        Input:
+        row: each row in a csv file
+
+        Return:
+        data: a list of variables 
+        '''
+
+        ind_1 = row[1]
+        ind_2 = row[2]
+        ind_3 = row[3]
+        ind_4 = row[4]
+        ind_5 = row[5]
+        ind_6 = row[6]
+        y = row[7]
+        data = [float(ind_1), float(ind_2), float(ind_3), float(ind_4), float(ind_5), float(ind_6), float(y)]
+
+        return data
         
     def extract_variables(self,line):
-        ''' (str)--([float,float,float...],float)
-        Extracts set of relevant features. (Needs to be rewriten depending
-        on file input structure) 
+        ''' 
+        Call the clean_raw_ind_data function to extracts set of relevant features. 
         '''
-        data = [float(var) for var in line.strip().split(",")]
+        data = self.clean_raw_ind_data(line)
         y,exo = data[6],data[:6]
         return (y,exo)
 
-    # Options #
-        
-    def configure_options(self):
-        ''' Additional options'''
-        super(MRLinearRegression,self).configure_options()
-        self.add_passthrough_option("--dimension", 
-                                    type = int,
-                                    help = "Number of explanatory variables (do not count bias term)")
-        self.add_passthrough_option("--bias", 
-                                    type = str, 
-                                    help = "Bias term, bias not included if anything other than 'True' ",
-                                    default = "True")
-                                    
-    def load_options(self,args):
-        ''' Loads and checks whether options are provided'''
-        super(MRLinearRegression,self).load_options(args)
-        if self.options.dimension is None:
-            self.option_parser.error(" define number of explanatory variables")
-        else:
-            self.dim = self.options.dimension
 
-    # Mapreduce steps #
+    #Mapreduce steps #
 
     def mapper_linear(self,_,line):
         '''
         Calculates x_t_x and x_t_y for data processed by each mapper
         '''
-        y,exo = self.extract_variables(line)
-        if len(exo) != self.dim:
-            raise DimensionMismatchError(self.dim,len(exo))
-        if self.options.bias is "True":
-            exo.append(1.0)
-        x = np.array(features)
+        row = next(csv.reader([line]))
+        y,exo = self.extract_variables(row)
+
+        exo.append(1.0)
+
+        x = np.array(exo)
+
         self.x_t_x  += np.outer(x, x)
         self.x_t_y  += y*x
         self.counts += 1
@@ -136,7 +123,7 @@ class MRLinearRegression(MRJob):
         for all data, then using cholesky decomposition obtains parameters of 
         linear regression.
         '''
-        n = self.dim
+        n = 7
         observations = 0
         x_t_x = np.zeros([n,n])
         x_t_y = np.zeros(n) 
@@ -149,7 +136,8 @@ class MRLinearRegression(MRJob):
                 observations += val[1]
 
         betas = cholesky_decomposition(x_t_x,x_t_y)
-        yield None,[beta_i for beta_i in betas]
+
+        yield None, str(betas)
 
     def steps(self):
         '''Defines map-reduce steps '''
