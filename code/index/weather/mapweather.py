@@ -3,7 +3,7 @@
 #
 # command: python3 thisfile inputfile outputfile
 # inputfile: ../../data/sample_trip.csv
-# outputfile: ../../data/index/weather_201507_201606.csv
+# outputfile: ../../data/sample_weather.csv
 
 import mapweather_util
 from mpi4py import MPI 
