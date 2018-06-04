@@ -28,15 +28,12 @@ def draw_one_sample(filename):
 	return sample_df
 
 # taxi data names
-# FILENAMES = ['yellow_tripdata_2015-07.csv', 'yellow_tripdata_2015-08.csv', \
-# 			 'yellow_tripdata_2015-09.csv', 'yellow_tripdata_2015-10.csv', \
-# 			 'yellow_tripdata_2015-11.csv', 'yellow_tripdata_2015-12.csv', \
-# 			 'yellow_tripdata_2016-01.csv', 'yellow_tripdata_2016-02.csv', \
-# 			 'yellow_tripdata_2016-03.csv', 'yellow_tripdata_2016-04.csv', \
-# 			 'yellow_tripdata_2016-05.csv', 'yellow_tripdata_2016-06.csv']
-
-FILENAMES = ['raw_2015_07_time.csv', 'raw_2015_08_time.csv', 'raw_2015_09_time.csv', \
-			'raw_2015_10_time.csv', 'raw_2015_11_time.csv']
+FILENAMES = ['yellow_tripdata_2015-07.csv', 'yellow_tripdata_2015-08.csv', \
+			 'yellow_tripdata_2015-09.csv', 'yellow_tripdata_2015-10.csv', \
+			 'yellow_tripdata_2015-11.csv', 'yellow_tripdata_2015-12.csv', \
+			 'yellow_tripdata_2016-01.csv', 'yellow_tripdata_2016-02.csv', \
+			 'yellow_tripdata_2016-03.csv', 'yellow_tripdata_2016-04.csv', \
+			 'yellow_tripdata_2016-05.csv', 'yellow_tripdata_2016-06.csv']
 
 
 if __name__ == '__main__':
@@ -46,7 +43,7 @@ if __name__ == '__main__':
 	rv = pd.concat(df_list)
 
 	# you can hard code here
-	rv.to_csv('../../data/raw_time_total_1.csv')
+	rv.to_csv('../../data/sample_trip.csv')
 
 
 
