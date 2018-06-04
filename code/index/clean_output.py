@@ -1,6 +1,8 @@
 # Purpose: use this file to clean the mapreduce result 
 #           
 # Command: python3 clean_output.py inputfile outputfile
+# Input: ../../data/index/location/location_index_time_raw.csv
+# Output: ../../data/index/location/location_index_time.csv
 
 
 import csv
