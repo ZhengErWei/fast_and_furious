@@ -1,6 +1,7 @@
 # python3 filename --jobconf mapreduce.job.reduces=1 inputfile > outputfile
-# use this file to count occurrence of different weather or location pair
-# in the sample file or calculate the index of different pairs
+# Purpose: use this file to count occurrence of different weather or location pair
+# 	   in the sample file or calculate the index of different pairs
+# Input: ../../data/index/weather_index/sample_weather_time.csv
 
 import math
 import csv
