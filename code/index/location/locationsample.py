@@ -1,5 +1,9 @@
+# Purpose: Get a sample data set from the whole one-year dataset, and the sample data will 
+#          be used to train the K-means model later.
+
 import pandas as pd 
 
+# Define the columns name of the data set
 COLUMNS = ['VendorID', 'tpep_pickup_datetime', 'tpep_dropoff_datetime',
            'passenger_count', 'trip_distance', 'pickup_longitude',
            'pickup_latitude', 'RatecodeID', 'store_and_fwd_flag',
@@ -8,6 +12,17 @@ COLUMNS = ['VendorID', 'tpep_pickup_datetime', 'tpep_dropoff_datetime',
            'improvement_surcharge', 'total_amount']
 
  def draw_one_sample(filename):
+   '''
+   The function is used to draw the sample data set from the monthly data set import 
+   from files
+   
+   Input:
+   filename: The filename of the monthly data
+   
+   Return:
+   sample_df: The dataframe of sample data
+   df_remain: The remaining dataframe exclude the data in the sample data.
+   '''
 
     df = pd.read_csv(filename)
     df = df.dropna(how='any')
@@ -15,7 +30,7 @@ COLUMNS = ['VendorID', 'tpep_pickup_datetime', 'tpep_dropoff_datetime',
     df_remain = df.drop(sample_df.index)
     return sample_df, df_remain
 
-
+# Define the list of filenames which be imported 
 FILENAMES = ['yellow_tripdata_2015-07.csv', 'yellow_tripdata_2015-08.csv', 
              'yellow_tripdata_2015-09.csv', 'yellow_tripdata_2015-10.csv', 
              'yellow_tripdata_2015-11.csv', 'yellow_tripdata_2015-12.csv', 
