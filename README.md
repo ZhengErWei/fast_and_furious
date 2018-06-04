@@ -6,7 +6,7 @@ Repository for CMSC 12300 (Computer Science with Applications-3) Group Project
 
 Traffic Pattern Detection Based on New York Yellow Taxi Dataset
 
-This project looks at causal relationship between several factors and traffic time by using big data technique mapreduce and mpi. Factors include weather, time and location. Different algorithms are also used to predict traffic time by using those variables. The project looks at single trip and pair of trip.
+This project looks at causal relationship between several factors and traffic time by using big data technique mapreduce and mpi. Factors include weather, time and location. Different algorithms are also used to predict traffic time by using those variables. The project looks at single trip and pair of trips.
 
 # Structure of repo
 - <code>report</code>: project proposal, final presentation and final report can be found here.
@@ -14,7 +14,7 @@ This project looks at causal relationship between several factors and traffic ti
 - <code>code</code>: all the code we wrote can be found here.
   - index - generates index on weather, location, and time over traffic time and tip rate
   - single trip - predicts traffic time on single trip
-  - matching pair - looks at causality and predicts difference in traffic time between matched pair of trips
+  - matching pair - looks at causality between pair differences and predicts traffic time by matching pair
   - passenger privacy  - deanonymizing interesting trips
   
 - <code>data</code>: sample data used or generated can be found here.
