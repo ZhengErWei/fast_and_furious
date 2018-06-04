@@ -106,19 +106,3 @@ class MRcontrol(MRJob):
 if __name__ == '__main__':
 	MRcontrol.run()
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
