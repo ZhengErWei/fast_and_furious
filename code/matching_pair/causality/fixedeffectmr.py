@@ -29,8 +29,9 @@ class MRcontrol(MRJob):
 		# hard code the file to find matching pair
 		# the datafile should be put inside the same folder
 		# you an use raw_time_total_sample.csv and raw_time_total_sample_2.csv
-		self.files = ['raw_time_total_sample.csv', 
-					 'raw_time_total_sample_2.csv']
+# 		self.files = ['raw_time_total_sample.csv', 
+# 					 'raw_time_total_sample_2.csv']
+		self.files = ['raw_sample_time_2.csv']
 		self.vars = ['weather_st_ind', 'weather_end_ind', 'loc_ind', 'weekday_ind', \
 					 'hour_ind', 'month_ind']
 
