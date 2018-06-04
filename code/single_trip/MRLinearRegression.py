@@ -1,3 +1,6 @@
+# Reference: (https://github.com/AmazaspShumik/MapReduce-Machine-Learning/blob/
+#            master/Linear%20Regression%20MapReduce/LinearRegressionTS.py)
+
 # -*- coding: utf-8 -*-
 from mrjob.job import MRJob
 from mrjob.protocol import JSONProtocol, RawValueProtocol
