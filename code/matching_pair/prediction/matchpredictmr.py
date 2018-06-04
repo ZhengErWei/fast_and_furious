@@ -4,7 +4,9 @@
 #          use the y as prediction
 
 # command: python3 thisfile inputdata
-# Input: ../../data
+# Input: files can be found in .../../../data (sample_trip_2.csv, raw_time_sample.csv)
+# Output: ../../../data/match_mr.txt
+
 
 from mrjob.job import MRJob
 import csv
