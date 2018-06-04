@@ -218,14 +218,14 @@ class MRmatch(MRJob):
 		clean the output from mapreduce.
 		'''
 
-		# ind_1 = row[0].strip("'[")
-		# ind_2 = row[1].strip(" '")
-		# ind_3 = row[2].strip(" '")
-		# ind_4 = row[3].strip(" '")
-		# ind_5 = row[4].strip(" '")
-		# ind_6, y = row[5].strip(" '").split(']\t')
+		ind_1 = row[0].strip("'[")
+		ind_2 = row[1].strip(" '")
+		ind_3 = row[2].strip(" '")
+		ind_4 = row[3].strip(" '")
+		ind_5 = row[4].strip(" '")
+		ind_6, y = row[5].strip(" '").split(']\t')
 
-		ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y = row[1:]
+# 		ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y = row[1:]
 
 		rv = [ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y]
 		rv = [float(a) for a in rv]
@@ -386,7 +386,6 @@ class MRmatch(MRJob):
 
 
 # yield each trip and pred dependent y
-# output format see ../data/matchmr_sample.csv
 
 	def reducer(self, row, lists):
 
