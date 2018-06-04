@@ -2,6 +2,7 @@
 # command: python3 thisfile
 # p.s. mapindex_util.py, mapweather_util.py and all files imported from these files should be put in the same folder
 # Input: files can be found in .../../../data (sample_trip_2.csv, raw_time_sample.csv)
+# Output: ../../../data/match_mr.txt
 
 from mpi4py import MPI 
 import csv
