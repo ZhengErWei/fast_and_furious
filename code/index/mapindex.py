@@ -209,7 +209,8 @@ class MRindex(MRJob):
 
 		row = next(csv.reader([line]))
 		if (len(row) > 0) and (row[1] != 'VendorID'):
-
+			# here use try because some categories in data
+			# not necessarily in the sample
 			try:
 				key, value = self.get_index(row)
 
