@@ -26,14 +26,10 @@ class MRmatch(MRJob):
 
 		# all data files should be put int the same folder
 		self.df = pd.read_csv('sample_trip.csv')
-		self.coordinates = self.df[["pickup_longitude", 
-							   		"pickup_latitude",
-							   		"dropoff_longitude",
-							   		"dropoff_latitude"]]
-		self.coordinates1 = self.coordinates[["pickup_longitude",
-											  "pickup_latitude"]]
-		self.coordinates2 = self.coordinates[["dropoff_longitude",
-											  "dropoff_latitude"]]
+		self.coordinates = self.df[["pickup_longitude", "pickup_latitude",
+					     "dropoff_longitude","dropoff_latitude"]]
+		self.coordinates1 = self.coordinates[["pickup_longitude", "pickup_latitude"]]
+		self.coordinates2 = self.coordinates[["dropoff_longitude", "dropoff_latitude"]]
 		self.coordinate_array1 = np.array(self.coordinates1)
 		self.coordinate_array2 = np.array(self.coordinates2)
 		self.kmeans_1 = KMeans(n_clusters= 50, 
@@ -49,8 +45,7 @@ class MRmatch(MRJob):
 		self.weather_df['minute'] = self.weather_df['minute'].astype(str)
 		for ind, row in self.WEATHER_DF.iterrows():
 			if row['cond'] == 'Unknown':
-				self.weather_df.loc[ind, 'cond'] = \
-				self.weather_df.iloc[ind - 1]['cond']
+				self.weather_df.loc[ind, 'cond'] = self.weather_df.iloc[ind - 1]['cond']
 
 
 		self.hour_list = []
@@ -181,10 +176,8 @@ class MRmatch(MRJob):
 		weather_end_ind = self.weather_index_dict[end_cond]
 
 		#location index
-		pick_clus = self.kmeans_1.predict(np.array([pick_lon, \
-													pick_lat]).reshape(1,-1))
-		drop_clus = self.kmeans_2.predict(np.array([drop_lon, \
-													drop_lat]).reshape(1,-1))
+		pick_clus = self.kmeans_1.predict(np.array([pick_lon, pick_lat]).reshape(1,-1))
+		drop_clus = self.kmeans_2.predict(np.array([drop_lon, drop_lat]).reshape(1,-1))
 		loc_ind = self.location_index_dict[(pick_clus[0], drop_clus[0])]
 
 		#time index
@@ -195,12 +188,10 @@ class MRmatch(MRJob):
 
 		month_ind = self.month_index.loc[int(month)]['index']
 
-		key = (weather_st_ind, weather_end_ind, loc_ind, weekday_ind, \
-			   hour_ind, month_ind)
+		key = (weather_st_ind, weather_end_ind, loc_ind, weekday_ind, hour_ind, month_ind)
 
 		# when y is traffic time
-		distance = self.calculate_distance(pick_lat, pick_lon, \
-										   drop_lat, drop_lat)
+		distance = self.calculate_distance(pick_lat, pick_lon, drop_lat, drop_lat)
 		start_time = datetime.strptime(row[2], '%Y-%m-%d %H:%M:%S')
 		end_time = datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S')
 		time_diff = (end_time - start_time).total_seconds()/60
@@ -210,7 +201,6 @@ class MRmatch(MRJob):
 		#value = float(row[16])/float(row[13])
 
 		return key, value
-
 
 
 	def clean_raw_ind_data(self, row):
@@ -224,9 +214,6 @@ class MRmatch(MRJob):
 		ind_4 = row[3].strip(" '")
 		ind_5 = row[4].strip(" '")
 		ind_6, y = row[5].strip(" '").split(']\t')
-
-# 		ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y = row[1:]
-
 		rv = [ind_1, ind_2, ind_3, ind_4, ind_5, ind_6, y]
 		rv = [float(a) for a in rv]
 
@@ -242,6 +229,7 @@ class MRmatch(MRJob):
 
 		return rv
 
+	
 	def abs_smaller(self, list1, list2):
 		'''
 		To decide whether each entry of list2 
@@ -254,6 +242,7 @@ class MRmatch(MRJob):
 
 		return True
 
+	
 	def is_smallest(self, list1, list2, diff_standard):
 		'''
 		To decide whether each entrty of list2 is smaller
@@ -266,8 +255,6 @@ class MRmatch(MRJob):
 			return diff
 		else:
 			False
-
-
 
 
 
@@ -294,24 +281,19 @@ class MRmatch(MRJob):
 			except:
 				row = None
 
+				
 	# same as mapper_init			
 	def reducer_init(self):
 
 		self.df = pd.read_csv('sample_trip.csv')
-		self.coordinates = self.df[["pickup_longitude", 
-							   		"pickup_latitude",
-							   		"dropoff_longitude",
-							   		"dropoff_latitude"]]
-		self.coordinates1 = self.coordinates[["pickup_longitude",
-											  "pickup_latitude"]]
-		self.coordinates2 = self.coordinates[["dropoff_longitude",
-											  "dropoff_latitude"]]
+		self.coordinates = self.df[["pickup_longitude", "pickup_latitude",
+					    "dropoff_longitude", "dropoff_latitude"]]
+		self.coordinates1 = self.coordinates[["pickup_longitude", "pickup_latitude"]]
+		self.coordinates2 = self.coordinates[["dropoff_longitude", "dropoff_latitude"]]
 		self.coordinate_array1 = np.array(self.coordinates1)
 		self.coordinate_array2 = np.array(self.coordinates2)
-		self.kmeans_1 = KMeans(n_clusters= 50, 
-							 random_state=0).fit(self.coordinate_array1)
-		self.kmeans_2 = KMeans(n_clusters= 50, 
-							 random_state=0).fit(self.coordinate_array2)
+		self.kmeans_1 = KMeans(n_clusters= 50, random_state=0).fit(self.coordinate_array1)
+		self.kmeans_2 = KMeans(n_clusters= 50, random_state=0).fit(self.coordinate_array2)
 
 		self.weather_df = pd.read_csv('weather_201507_201606.csv')
 		self.weather_df.columns = ['date', 'hour', 'minute', 'visibility', 'cond']
@@ -321,8 +303,7 @@ class MRmatch(MRJob):
 		self.weather_df['minute'] = self.weather_df['minute'].astype(str)
 		for ind, row in self.WEATHER_DF.iterrows():
 			if row['cond'] == 'Unknown':
-				self.weather_df.loc[ind, 'cond'] = \
-				self.weather_df.iloc[ind - 1]['cond']
+				self.weather_df.loc[ind, 'cond'] = self.weather_df.iloc[ind - 1]['cond']
 
 
 		self.hour_list = []
@@ -385,8 +366,8 @@ class MRmatch(MRJob):
 		self.min_diff = [6] * 6
 
 
+		
 # yield each trip and pred dependent y
-
 	def reducer(self, row, lists):
 
 		key, value = self.get_index(row)
