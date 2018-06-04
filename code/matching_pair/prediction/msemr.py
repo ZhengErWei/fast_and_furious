@@ -1,6 +1,6 @@
 # command: python3 reg_result_compare.py --jobconf mapreduce.job.reduces=1 sample_match_time.csv 
 # purpose: use this function to get mse of prediction made by matching pair and dummy regressor by mean
-# Input: 
+# Input: ../../../data/match_mr.txt or match_mpi.txt
 
 from mrjob.job import MRJob
 from mrjob.step import MRStep
@@ -47,6 +47,8 @@ class MRpairreg(MRJob):
 		
 		y_true = self.get_index(row)
 		_, y_pred  = row[-1].strip(" '").split(']\t')
+		# if match_mpi.txt
+		# y_pred = row[-1]
 
 		return float(y_pred), y_true
 
