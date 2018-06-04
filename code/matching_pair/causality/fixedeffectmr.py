@@ -2,7 +2,7 @@
 #          by comparing the five indices and look at
 #          the relationship between pair differences
 #  	   of the last index and y variable
-# Input: 
+# Input: ../../../data/raw_sample_time.csv
 # p.s. sample output can be check in ../../data/fix_sample.csv
 #      and all files should be put in the same directory
 
