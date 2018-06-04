@@ -3,6 +3,7 @@
 #
 # command: python3 thisfile input > output
 # p.s. all data file imported in this file should be put in the same directory
+# Output: ../../data/raw_sample_time.csv
 
 from mrjob.job import MRJob
 import csv
